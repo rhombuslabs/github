@@ -54,7 +54,7 @@ namespace guidant_xyzcorp.Controllers
         }
 
         [Route("api/setPoints")]
-        public void SetPoints([FromBody]User user)
+        public string SetPoints([FromBody]User user)
         {
             var u = context.Users.SingleOrDefault(s => s.id == user.id);
 
@@ -66,6 +66,8 @@ namespace guidant_xyzcorp.Controllers
             u.points = user.points;
 
             context.SaveChanges();
+
+            return $"Points updated for {u.name} to {u.points}";
         }
     }
 }
