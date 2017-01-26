@@ -41,7 +41,11 @@ namespace guidant_xyzcorp.Controllers
         // POST api/users
         public int Post([FromBody]User user)
         {
-            if (context.Users.Any(u => u.name == user.name))
+            if(string.IsNullOrEmpty(user.name))
+            {
+                throw new ArgumentException($"User name is required, canceling insert.");
+            }
+            else if (context.Users.Any(u => u.name == user.name))
             {
                 throw new ArgumentException($"User name already exists, canceling insert: {user.name}");
             }
@@ -67,7 +71,7 @@ namespace guidant_xyzcorp.Controllers
 
             context.SaveChanges();
 
-            return $"Points updated for {u.name} to {u.points}";
+            return $"Points updated for User '{u.name}' to {u.points}";
         }
     }
 }
